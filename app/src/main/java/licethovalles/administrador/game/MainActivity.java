@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,11 +23,12 @@ import android.os.Handler;
 
 public class MainActivity extends ActionBarActivity  {
 
+    private String TAG = "elJuego";
     private Button b1,b2,b3,b4,b5,b6,b7,b8,b9,b10,b11,b12,b13,b14,b15,b16,b17,b18;
     private TextView ed;
     ArrayList botones;
     RelativeLayout X;
-    int contador,total=0,intento=0,NoJuegos=0,MayorPtj=0;
+    int contador,total=0,intento=0,NoJuego,MayorPtj=0;
     Bundle temp;
     //Handler h;
     @Override
@@ -196,6 +198,11 @@ public class MainActivity extends ActionBarActivity  {
             }
         });
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        NoJuego = sharedPref.getInt("PUNTAJES", 0);
+
+        Log.d(TAG, "Iniciamos con "+NoJuego);
+
 
     }
 
@@ -257,8 +264,9 @@ public void comparar2()
                         b.setEnabled(false);
                         contador -= 2;
                         if (contador == 0) {
-                            NoJuegos=NoJuegos++;
+                            NoJuego++;
                             Toast.makeText(getApplicationContext(), "Has Ganado", Toast.LENGTH_LONG).show();
+                            juegos();
                         }
                     } else {
 
@@ -274,7 +282,7 @@ public void comparar2()
 
         }
 
-        juegos();
+
 
     }
 
@@ -284,10 +292,12 @@ public void comparar2()
         //now get Editor
         SharedPreferences.Editor editor = sharedPref.edit();
         //put your value
-        editor.putInt("PUNTAJES",NoJuegos );
+        editor.putInt("PUNTAJES",NoJuego );
 
         //commits your edits
         editor.commit();
+
+        Log.d(TAG, "Almacenamos  " + NoJuego);
     }
 
     public void reiniciar(View view)

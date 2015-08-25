@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class historial extends AppCompatActivity {
 
     private Button button;
-    private EditText ed;
+    private TextView ed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class historial extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         int game = sharedPref.getInt("PUNTAJES", 0);
 
-        ed = (EditText) findViewById(R.id.editText);
+        ed = (TextView) findViewById(R.id.textView2);
         ed.setText(""+game);
     }
 
